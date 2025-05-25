@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { EventForm } from '@/components/EventForm';
 import { EventList } from '@/components/EventList';
@@ -32,8 +31,19 @@ const Index = () => {
   };
 
   const filteredEvents = events.filter(event => {
-    const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         event.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchLower = searchTerm.toLowerCase();
+    const matchesSearch = searchTerm === '' || 
+      event.title.toLowerCase().includes(searchLower) ||
+      event.description?.toLowerCase().includes(searchLower) ||
+      event.location.toLowerCase().includes(searchLower) ||
+      event.organizer.toLowerCase().includes(searchLower) ||
+      event.email.toLowerCase().includes(searchLower) ||
+      event.category.toLowerCase().includes(searchLower) ||
+      event.date.includes(searchTerm) ||
+      event.time.includes(searchTerm) ||
+      event.price.toString().includes(searchTerm) ||
+      event.capacity.toString().includes(searchTerm);
+    
     const matchesCategory = filterCategory === 'all' || event.category === filterCategory;
     return matchesSearch && matchesCategory;
   });
