@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { EventForm } from '@/components/EventForm';
 import { EventList } from '@/components/EventList';
@@ -45,7 +44,14 @@ const Index = () => {
         .order('date', { ascending: true });
 
       if (error) throw error;
-      setEvents(data || []);
+      
+      // Cast the data to ensure type safety
+      const typedEvents = (data || []).map(event => ({
+        ...event,
+        category: event.category as Event['category']
+      }));
+      
+      setEvents(typedEvents);
     } catch (error) {
       console.error('Error fetching events:', error);
       toast({
@@ -81,7 +87,13 @@ const Index = () => {
 
       if (error) throw error;
 
-      setEvents([...events, data]);
+      // Cast the returned data to match our Event type
+      const typedEvent = {
+        ...data,
+        category: data.category as Event['category']
+      };
+
+      setEvents([...events, typedEvent]);
       setShowForm(false);
       toast({
         title: "Success",
