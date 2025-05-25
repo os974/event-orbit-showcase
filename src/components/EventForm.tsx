@@ -1,11 +1,24 @@
 
 import React, { useState } from 'react';
-import { Event } from '@/types/Event';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { CalendarIcon, MapPin, Users, DollarSign, Mail, User } from 'lucide-react';
+
+interface Event {
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  location: string;
+  category: 'conference' | 'workshop' | 'seminar' | 'networking' | 'training' | 'webinar';
+  capacity: number;
+  organizer: string;
+  email: string;
+  price: number;
+  image_url?: string;
+}
 
 interface EventFormProps {
   onSubmit: (event: Event) => void;
@@ -23,14 +36,13 @@ export const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
     organizer: '',
     email: '',
     price: '',
-    imageUrl: ''
+    image_url: ''
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     const event: Event = {
-      id: '',
       title: formData.title,
       description: formData.description,
       date: formData.date,
@@ -41,7 +53,7 @@ export const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
       organizer: formData.organizer,
       email: formData.email,
       price: parseFloat(formData.price),
-      imageUrl: formData.imageUrl || `https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=300&fit=crop`
+      image_url: formData.image_url || `https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=300&fit=crop`
     };
 
     onSubmit(event);
@@ -56,7 +68,7 @@ export const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
       organizer: '',
       email: '',
       price: '',
-      imageUrl: ''
+      image_url: ''
     });
   };
 
@@ -243,12 +255,12 @@ export const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
 
         {/* Image URL */}
         <div className="md:col-span-2">
-          <Label htmlFor="imageUrl" className="text-slate-700 font-medium">Image URL (Optional)</Label>
+          <Label htmlFor="image_url" className="text-slate-700 font-medium">Image URL (Optional)</Label>
           <Input
-            id="imageUrl"
-            name="imageUrl"
+            id="image_url"
+            name="image_url"
             type="url"
-            value={formData.imageUrl}
+            value={formData.image_url}
             onChange={handleChange}
             className="mt-1 bg-white/80 border-slate-200"
             placeholder="https://example.com/image.jpg"

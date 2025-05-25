@@ -1,7 +1,21 @@
 
 import React from 'react';
-import { Event } from '@/types/Event';
 import { EventCard } from '@/components/EventCard';
+
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  location: string;
+  category: 'conference' | 'workshop' | 'seminar' | 'networking' | 'training' | 'webinar';
+  capacity: number;
+  organizer: string;
+  email: string;
+  price: number;
+  image_url?: string;
+}
 
 interface EventListProps {
   events: Event[];

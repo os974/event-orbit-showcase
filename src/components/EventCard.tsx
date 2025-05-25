@@ -1,9 +1,23 @@
 
 import React from 'react';
-import { Event } from '@/types/Event';
 import { CalendarIcon, MapPin, Users, DollarSign, Mail, Clock } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  location: string;
+  category: 'conference' | 'workshop' | 'seminar' | 'networking' | 'training' | 'webinar';
+  capacity: number;
+  organizer: string;
+  email: string;
+  price: number;
+  image_url?: string;
+}
 
 interface EventCardProps {
   event: Event;
@@ -49,7 +63,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
     <Card className="group hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm border-white/20 overflow-hidden">
       <div className="relative">
         <img
-          src={event.imageUrl}
+          src={event.image_url}
           alt={event.title}
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
